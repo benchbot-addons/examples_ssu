@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+# Demo agent for showing evaluation procedure. Multiple simple scenarios available.
+# User gets to define what test is being done for what task
+
+from benchbot_api import BenchBot
+from eval_semantic_slam_agent import EvalSemanticSlamAgent
+
+if __name__ == '__main__':
+    BenchBot(agent=EvalSemanticSlamAgent()).run()

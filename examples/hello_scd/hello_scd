@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+
+# Demo agent for the Semantic Change Detection (SCD) task uses passive mode to
+# run the robot through the environment, & moves to the comparision environment
+# once the first environment has been explored.
+
+from benchbot_api import ActionResult, Agent, BenchBot, RESULT_LOCATION
+
+
+class ScdAgent(Agent):
+
+    def is_done(self, action_result):
+        # Finish when we are out of poses or we collide
+        return (action_result == ActionResult.FINISHED or
+                action_result == ActionResult.COLLISION)
+
+    def pick_action(self, observations, action_list):
+        # Always move to next, but also show scene number is available
+        print("Running in scene number: %s" % observations['scene_number'])
+        return 'move_next', {}
+
+    def save_result(self, filename, empty_results, empty_object_fn):
+        # We are just demoing; there are no results to save
+        return
+
+
+if __name__ == '__main__':
+    BenchBot(agent=ScdAgent()).run()

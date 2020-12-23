@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+
+# Demo agent for passive mode that steps through each of the available poses in
+# the environment, executing the "move_next" action recursively. Observations
+# are visualised by the agent at the completion of each action.
+
+import json
+import os
+import sys
+
+from benchbot_api import BenchBot, ActionResult, Agent
+
+_CLASS_LIST = [
+    'bottle', 'cup', 'knife', 'bowl', 'wine glass', 'fork', 'spoon', 'banana',
+    'apple', 'orange', 'cake', 'potted plant', 'mouse', 'keyboard', 'laptop',
+    'cell phone', 'book', 'clock', 'chair', 'table', 'couch', 'bed', 'toilet',
+    'tv', 'microwave', 'toaster', 'refrigerator', 'oven', 'sink', 'person',
+    'background'
+]
+
+
+class SemanticSlamAgent(Agent):
+
+    def __init__(self):
+        self.votenet = votenet_build()
+        self.raw_results = []
+
+    def is_done(self, action_result):
+        # Go forever as long as we have a action_result of SUCCESS
+        return action_result != ActionResult.SUCCESS
+
+    def pick_action(self, observations, action_list):
+        frame_results = votenet_detection(self.votenet, observations)
+        self.raw_results.append(frame_results)
+        return 'move_next', {}
+
+    def save_result(self, filename, empty_results, empty_object_fn):
+        # Amalgamate our raw results, & save the final object map
+        empty_results['objects'] = votenet_nms(self.raw_results, self.votenet,
+                                               _CLASS_LIST)
+        with open(filename, 'w') as f:
+            json.dump(empty_results, f)
+        return
+
+_VOTENET_PROMPT=\
+"""ERROR: Could not find 'votenet' in the following folder:\n    %s\n
+Please install votenet & make sure it is available at the above location. Full
+install instructions can be found on the 'votenet' Github page:
+    https://github.com/facebookresearch/votenet
+
+General install instructions:
+    1. Install pytorch (>=1.5.0 currently fails to build CUDA layers):
+        pip install 'torch<1.5.0' torchvision
+    2. Install tensorflow:
+        pip install tensorflow
+    3. Compile CUDA layers for PointNet++:
+        cd pointnet2 && python setup.py install
+    4. Install votenet dependencies:
+        pip install matplotlib opencv-python plyfile \\
+                'trimesh>=2.35.39,<2.35.40' 'networkx>=2.2,<2.3'
+    5. Download pre-trained model & extract to '.../votenet/demo_files':
+        wget "https://drive.google.com/uc?export=download&id=1oem0w5y5pjo2whBhAqTtuaYuyBu1OG8l" \\
+                -O demo_files.zip && unzip demo_files.zip && rm demo_files.zip
+
+To add an existing installation of votenet to this example simply create a 
+symlink:
+    ln -sv <votenet_install_location> <folder_containing_this_file>
+
+Alternatively, run the containerised version of this example:
+    benchbot_submit --containerised <examples_folder>/semantic_slam_attempt
+"""
+
+if __name__ == '__main__':
+    # Check votenet is available ...
+    p = os.path.join(os.path.dirname(__file__), "votenet")
+    if not os.path.isdir(p):
+        print("%s" % _VOTENET_PROMPT % os.path.abspath(p))
+        sys.exit(1)
+    from votenet_benchbot import votenet_build, votenet_detection, votenet_nms
+
+    # Run BenchBot
+    BenchBot(agent=SemanticSlamAgent()).run()
