@@ -1,0 +1,15 @@
+name: semantic_slam_attempt
+description: |
+  Wraps the VoteNet 3D object detector from Facebook Research with an attempted
+  solution for semantic SLAM tasks. It needs to be run for a task that uses
+  "passive" mode (i.e. requires the action "move_next"). 
+
+  The included Dockerfile allows running without manually installing VoteNet.
+  Please note that the compilation of CUDA layers will have to be done every
+  time though due to limitations in Docker's GPU support. For this reason, it
+  is recommended to run this example natively where possible. 
+
+  Please see the VoteNet repository for more details on the method:
+    (https://github.com/facebookresearch/votenet)
+native_command: python3 .semantic_slam_attempt/semantic_slam_attempt
+dockerfile: .semantic_slam_attempt/Dockerfile

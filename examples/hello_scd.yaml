@@ -1,0 +1,8 @@
+name: hello_scd
+description: |
+  This example introduces you to Scene Change Detection (SCD) tasks, which
+  require the robot to navigate through two scenes of an environment. It needs
+  to be run for a task that uses "passive" mode (i.e. requires the action
+  "move_next").
+native_command: python3 .hello_scd/hello_scd
+dockerfile: .hello_scd/Dockerfile

@@ -1,0 +1,8 @@
+name: aigym_scd
+description: |
+  This example shows how to explicitly create an "OpenAI Gym" style control
+  loop for Scene Change Detection (SCD) tasks as opposed to simply calling
+  BenchBot API's 'run()' method. It demonstrates how custom run loops can be
+  created from core API functions.
+native_command: python3 .aigym_scd/aigym_scd
+dockerfile: .aigym_scd/Dockerfile

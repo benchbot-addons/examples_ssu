@@ -1,0 +1,8 @@
+name: hello_eval_semantic_slam
+description: |
+  Creates a basic agent which exits immediately with a dummy object map result
+  derived from the ground truth for environment 'miniroom:1'. The example can
+  be run in other environments, but will return poor evaluation
+  results as expected.
+native_command: python3 .hello_eval_semantic_slam/hello_eval_semantic_slam
+dockerfile: .hello_eval_semantic_slam/Dockerfile
