@@ -5,4 +5,4 @@ description: |
   be run in other environments, but will return poor evaluation
   results as expected.
 native_command: python3 .hello_eval_semantic_slam/hello_eval_semantic_slam
-dockerfile: .hello_eval_semantic_slam/Dockerfile
+container_directory: .hello_eval_semantic_slam

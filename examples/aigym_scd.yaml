@@ -5,4 +5,4 @@ description: |
   BenchBot API's 'run()' method. It demonstrates how custom run loops can be
   created from core API functions.
 native_command: python3 .aigym_scd/aigym_scd
-dockerfile: .aigym_scd/Dockerfile
+container_directory: .aigym_scd

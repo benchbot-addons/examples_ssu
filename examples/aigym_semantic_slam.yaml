@@ -5,4 +5,4 @@ description: |
   'run()' method. It demonstrates how custom run loops can be created from core
   API functions.
 native_command: python3 .aigym_semantic_slam/aigym_semantic_slam
-dockerfile: .aigym_semantic_slam/Dockerfile
+container_directory: .aigym_semantic_slam

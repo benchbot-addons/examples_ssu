@@ -12,4 +12,4 @@ description: |
   Please see the VoteNet repository for more details on the method:
     (https://github.com/facebookresearch/votenet)
 native_command: python3 .semantic_slam_attempt/semantic_slam_attempt
-dockerfile: .semantic_slam_attempt/Dockerfile
+container_directory: .semantic_slam_attempt

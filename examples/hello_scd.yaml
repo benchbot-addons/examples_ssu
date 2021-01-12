@@ -5,4 +5,4 @@ description: |
   to be run for a task that uses "passive" mode (i.e. requires the action
   "move_next").
 native_command: python3 .hello_scd/hello_scd
-dockerfile: .hello_scd/Dockerfile
+container_directory: .hello_scd
