@@ -19,7 +19,7 @@ class ScdAgent(Agent):
         print("Running in scene number: %s" % observations['scene_number'])
         return 'move_next', {}
 
-    def save_result(self, filename, empty_results, empty_object_fn):
+    def save_result(self, filename, empty_results, results_format_fns):
         # We are just demoing; there are no results to save
         return
 

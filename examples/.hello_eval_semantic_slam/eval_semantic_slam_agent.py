@@ -26,7 +26,7 @@ class EvalSemanticSlamAgent(Agent):
         # Should never get to this point?
         return None, {}
 
-    def save_result(self, filename, empty_results, empty_object_fn):
+    def save_result(self, filename, empty_results, results_format_fns):
         # Load objects from the ground truth file supplied with this example
         with open(_GROUND_TRUTH, 'r') as f:
             gt_objects = json.load(f)['objects']

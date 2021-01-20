@@ -1,1 +1,4 @@
 *.sw*
+__pycache__
+
+examples/.semantic_slam_attempt/votenet

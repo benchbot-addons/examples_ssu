@@ -20,7 +20,6 @@ _CLASS_LIST = [
 
 
 class SemanticSlamAgent(Agent):
-
     def __init__(self):
         self.votenet = votenet_build()
         self.raw_results = []
@@ -34,13 +33,14 @@ class SemanticSlamAgent(Agent):
         self.raw_results.append(frame_results)
         return 'move_next', {}
 
-    def save_result(self, filename, empty_results, empty_object_fn):
+    def save_result(self, filename, empty_results, results_format_fns):
         # Amalgamate our raw results, & save the final object map
-        empty_results['objects'] = votenet_nms(self.raw_results, self.votenet,
-                                               _CLASS_LIST)
+        empty_results['results']['objects'] = votenet_nms(
+            self.raw_results, self.votenet, _CLASS_LIST)
         with open(filename, 'w') as f:
             json.dump(empty_results, f)
         return
+
 
 _VOTENET_PROMPT=\
 """ERROR: Could not find 'votenet' in the following folder:\n    %s\n

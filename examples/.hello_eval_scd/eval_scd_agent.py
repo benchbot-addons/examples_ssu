@@ -28,7 +28,7 @@ class EvalScdAgent(Agent):
         # Should never get to this point?
         return None, {}
 
-    def save_result(self, filename, empty_results, empty_object_fn):
+    def save_result(self, filename, empty_results, results_format_fns):
         # Load objects from the ground truth files supplied with this example
         with open(_GROUND_TRUTH_1, 'r') as f:
             gt_objects_1 = json.load(f)['objects']
