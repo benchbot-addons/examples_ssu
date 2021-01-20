@@ -58,7 +58,7 @@ General install instructions:
     4. Install votenet dependencies:
         pip install matplotlib opencv-python plyfile \\
                 'trimesh>=2.35.39,<2.35.40' 'networkx>=2.2,<2.3'
-    5. Download pre-trained model & extract to '.../votenet/demo_files':
+    5. Download pre-trained model & extract to '../votenet/demo_files':
         wget "https://drive.google.com/uc?export=download&id=1oem0w5y5pjo2whBhAqTtuaYuyBu1OG8l" \\
                 -O demo_files.zip && unzip demo_files.zip && rm demo_files.zip
 
