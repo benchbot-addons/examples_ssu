@@ -17,7 +17,6 @@ _CLASS_LIST = [
 
 
 class EvalSemanticSlamAgent(Agent):
-
     def is_done(self, action_result):
         # Finish immediately as we are only evaluating
         return True
@@ -33,12 +32,14 @@ class EvalSemanticSlamAgent(Agent):
 
         # Create an empty object in our semantic map corresponding to each of
         # the objects we are going to "steal" from the ground truth list
-        empty_results['objects'] = [empty_object_fn() for o in gt_objects]
+        empty_results['results']['objects'] = [
+            empty_object_fn() for o in gt_objects
+        ]
 
         # Populate each object in our semantic map with the data from the
         # ground truth list of objects (we are cheating to perform "perfect"
         # Semantic SLAM so we can demonstrate the evaluation process)
-        for gt, o in zip(gt_objects, empty_results['objects']):
+        for gt, o in zip(gt_objects, empty_results['results']['objects']):
             o['label_probs'] = [
                 1.0 if i == _CLASS_LIST.index(gt['class']) else 0.0
                 for i in range(len(_CLASS_LIST))
