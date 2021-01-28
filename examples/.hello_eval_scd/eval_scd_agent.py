@@ -30,9 +30,9 @@ class EvalScdAgent(Agent):
     def save_result(self, filename, empty_results, results_format_fns):
         # Load objects from the ground truth files supplied with this example
         with open(_GROUND_TRUTH_1, 'r') as f:
-            gt_objects_1 = json.load(f)['objects']
+            gt_objects_1 = json.load(f)['ground_truth']['objects']
         with open(_GROUND_TRUTH_2, 'r') as f:
-            gt_objects_2 = json.load(f)['objects']
+            gt_objects_2 = json.load(f)['ground_truth']['objects']
 
         # Generate lists of added & removed objects
         removed_objects = [o for o in gt_objects_1 if o not in gt_objects_2]
@@ -42,7 +42,8 @@ class EvalScdAgent(Agent):
         # the added or removed objects we are going to "steal" from the ground
         # truth list
         empty_results['results']['objects'] = [
-            empty_object_fn() for o in removed_objects + added_objects
+            results_format_fns['create_object']()
+            for o in removed_objects + added_objects
         ]
 
         # Populate each object in our semantic map of changed objects with the

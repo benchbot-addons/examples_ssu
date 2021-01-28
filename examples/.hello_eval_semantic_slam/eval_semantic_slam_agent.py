@@ -28,12 +28,12 @@ class EvalSemanticSlamAgent(Agent):
     def save_result(self, filename, empty_results, results_format_fns):
         # Load objects from the ground truth file supplied with this example
         with open(_GROUND_TRUTH, 'r') as f:
-            gt_objects = json.load(f)['objects']
+            gt_objects = json.load(f)['ground_truth']['objects']
 
         # Create an empty object in our semantic map corresponding to each of
         # the objects we are going to "steal" from the ground truth list
         empty_results['results']['objects'] = [
-            empty_object_fn() for o in gt_objects
+            results_format_fns['create_object']() for o in gt_objects
         ]
 
         # Populate each object in our semantic map with the data from the
