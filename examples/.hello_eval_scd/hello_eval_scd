@@ -7,4 +7,7 @@ from benchbot_api import BenchBot
 from eval_scd_agent import EvalScdAgent
 
 if __name__ == '__main__':
+    print("NOTE: this example doesn't actually use the task, and will work in "
+          "any task. Normally though, it would be important to run this with "
+          "an SCD task. ")
     BenchBot(agent=EvalScdAgent()).run()
