@@ -35,6 +35,7 @@ class EvalSemanticSlamAgent(Agent):
         empty_results['results']['objects'] = [
             results_format_fns['create_object']() for o in gt_objects
         ]
+        empty_results['results']['class_list'] = _CLASS_LIST
 
         # Populate each object in our semantic map with the data from the
         # ground truth list of objects (we are cheating to perform "perfect"
@@ -46,7 +47,7 @@ class EvalSemanticSlamAgent(Agent):
             ]  # Probabilistic way to say "100% sure it is class X"
             o['centroid'] = gt['centroid']
             o['extent'] = gt['extent']
-
+        
         # Save the results at the requested location
         with open(filename, "w") as f:
             json.dump(empty_results, f)
