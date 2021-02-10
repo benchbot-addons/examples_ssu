@@ -10,11 +10,10 @@ from benchbot_api import ActionResult, Agent, BenchBot, RESULT_LOCATION
 
 
 class AiGymAgent(Agent):
-
     def is_done(self, action_result):
         # Finish when we are out of poses or we collide
-        return (action_result == ActionResult.FINISHED or
-                action_result == ActionResult.COLLISION)
+        return (action_result == ActionResult.FINISHED
+                or action_result == ActionResult.COLLISION)
 
     def pick_action(self, observations, action_list):
         # Always move to next
@@ -32,6 +31,17 @@ if __name__ == '__main__':
     # episode
     bb = BenchBot()
     observations, action_result = bb.reset()
+
+    # Bail if our configuration seems invalid
+    if 'move_next' not in bb.actions:
+        raise ValueError(
+            "There's no 'move_next' action available, please run "
+            "this example again in a task with passive actuation.")
+    if ('scene_count' in bb.config['task']
+            and bb.config['task']['scene_count'] != 1):
+        raise ValueError(
+            "Semantic SLAM is expected, but this task doesn't use 1 scene. "
+            "Are you sure you're running a semantic SLAM task?")
 
     # Use our Agent to run through the episode until completion
     a = AiGymAgent()
