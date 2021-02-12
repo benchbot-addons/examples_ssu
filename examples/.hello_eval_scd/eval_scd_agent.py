@@ -45,6 +45,7 @@ class EvalScdAgent(Agent):
             results_format_fns['create_object']()
             for o in removed_objects + added_objects
         ]
+        empty_results['results']['class_list'] = _CLASS_LIST
         
         # Populate each object in our semantic map of changed objects with the
         # data from the ground truth list of changes (we are cheating to
