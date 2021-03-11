@@ -30,4 +30,9 @@ class ScdAgent(Agent):
 
 
 if __name__ == '__main__':
-    BenchBot(agent=ScdAgent()).run()
+    b = BenchBot()
+    if b.config['task']['scene_count'] != 2:
+        raise RuntimeError(
+            "Attempted to run this in a task that doesn't provide 2 scenes. "
+            "Are you sure you're running this against an SCD task? ")
+    b.run(agent=ScdAgent())
