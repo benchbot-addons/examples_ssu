@@ -62,4 +62,4 @@ if __name__ == '__main__':
     # NOTE: you must save to the default RESULT_LOCATION as show below for your
     # code to work with the '-e' and '-r|--results-location' flags of the
     # 'benchbot_submit' script
-    a.save_result(RESULT_LOCATION, bb.empty_results())
+    a.save_result(RESULT_LOCATION, bb.empty_results(), bb.results_functions())
