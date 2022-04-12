@@ -179,15 +179,17 @@ def compute_world_T_camera(pose_rotation, pose_translation):
 def convert_depth_to_pointcloud(observations):
     # convert depth image into point cloud
     depth_image = observations['image_depth']
-    image_size = depth_image.shape
-    nx = np.arange(0, image_size[1])
-    ny = np.arange(0, image_size[0])
+    image_info = observations['image_depth_info']
+    cam_intrinsics = image_info['matrix_intrinsics']
+    nx = np.arange(0, image_info['width'])
+    ny = np.arange(0, image_info['height'])
     x, y = np.meshgrid(nx, ny)
-    f = np.array([480], dtype=np.float32)
-    cx = image_size[1] / 2.0
-    cy = image_size[0] / 2.0
-    x3 = (x - cx) * depth_image * 1 / f
-    y3 = (y - cy) * depth_image * 1 / f
+    fx = cam_intrinsics[0,0]
+    fy = cam_intrinsics[1,1]
+    cx = cam_intrinsics[0,2]
+    cy = cam_intrinsics[1,2]
+    x3 = (x - cx) * depth_image * 1 / fx
+    y3 = (y - cy) * depth_image * 1 / fy
     # pack the point cloud according to the votenet camera coordinate system
     # which is actually the same as benchbot's
     point3d = np.stack((x3.flatten(), depth_image.flatten(), -y3.flatten()),
